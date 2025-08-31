@@ -21,3 +21,12 @@ db 연동 라이브러리 설치
 pip install sqlalchemy
 
 4. VS Code와 같은 IDE 설정 
+
+
+echo "# python-flask-db-window" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin git@github.com:slow333/python-flask-db-window.git
+git push -u origin main

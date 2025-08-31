@@ -29,7 +29,7 @@
   --blue-light: blue;
   --bg-dark: #555151;
   --bg-light: #cccccc;
-  --accent:rgb(122, 0, 236);
+  --accent:rgb(11, 1, 100);
 
   --shadow-box: 0 3px 3px -3px black;
 }
@@ -138,16 +138,7 @@ table {
   margin: var(--fs-base) 0;
   font-size: var(--fs-small); 
 }
-button {
-  padding: 0.5rem var(--fs-base); 
-  font-size: var(--fs-small); 
-  font-weight: 500;
-  margin-top: var(--fs-base); 
-  color: var(--gray-light); 
-  background-color: var(--nav-bg-color); 
-  border: none;
-  border-radius: 0.375rem; 
-}
+
 
 /* ====== nav menu ====== */
 .navbar {
@@ -223,7 +214,19 @@ button {
 #hamburger:hover img {
   cursor: pointer;
 }
-
+button {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.5rem 1rem;
+  font-size: var(--fs-base);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+button:hover {
+  background-color: #555151;
+}
 @media screen and (max-width: 900px) {
   .aside { display: none; float: none;}
   main { display:block;
