@@ -1,0 +1,23 @@
+1. Python 설치 
+1. 다운로드:
+Python.org에서 3.6.8 버전의 Python 설치 파일을 다운로드
+2. 설치:
+설치 과정에서 "Add Python to PATH" 옵션을 반드시 선택하여 환경 변수를 등록합니다.
+
+2. 가상 환경(Virtual Environment) 생성 
+가상 환경 생성: 개발하려는 프로젝트 폴더를 만들고
+    python -m venv .venv
+가상 환경 활성화: 생성된 가상 환경을 활성화
+    .venv\Scripts\activate
+(프롬프트 앞에 .venv가 붙으면 활성화된 것입니다.) 
+Flask 설치
+    pip install Flask
+
+데이터베이스 라이브러리 설치
+pip install --only-binary :all: psycopg2-binary
+(앞에 option이 없으면 c++ 14 설치하라는 애러 나옮)
+
+db 연동 라이브러리 설치
+pip install sqlalchemy
+
+4. VS Code와 같은 IDE 설정 
