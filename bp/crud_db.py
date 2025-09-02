@@ -1,6 +1,3 @@
-import sys
-sys.path.append('B:\\python\\window-flask')
-
 from flask import Blueprint, request, redirect # type: ignore
 from sqlalchemy import insert, delete, update, select
 
@@ -14,8 +11,7 @@ users_db_bp = Blueprint("crud_db", __name__, url_prefix="/users")
 
 def all_users():
   with engine.connect() as conn:
-    result = conn.execute(select([users]).order_by(users.c.id.desc()
-))
+    result = conn.execute(select([users]).order_by(users.c.id.desc()))
     return result.fetchall()
 
 @users_db_bp.route("/")
@@ -33,7 +29,6 @@ def users_home():
 @users_db_bp.route("/all")
 def users_all():
     page = int(request.args.get("page", 1))
-    print("page ======= >>> ", page)
     per_page = 5  # 한 페이지에 5명씩
     offset = (page - 1) * per_page
 
@@ -48,7 +43,6 @@ def users_all():
 
     users_list = getUsersList(users_page)
 
-    next_page = f'<a href="/users/all?page={page+per_page}">Next</a>' if len(users_page) == per_page else ''
     # 페이지네이션: 현재 페이지 기준으로 최대 5개 페이지만 표시
     total_pages = (total // per_page) + (1 if total % per_page else 0)
     start_page = max(1, page - 2)
@@ -61,13 +55,15 @@ def users_all():
         page_links += f'<strong style="color: red;font-size:1.4rem;">{i}</strong> '
       else:
         page_links += f'<a href="/users/all?page={i}" style="color: blue;font-size:1.4rem;">{i}</a> '
-    prev_page = f'<a href="/users/all?page={page-per_page}">Prev</a>' if page > 1 else ''
-    first_page = f'<a href="/users/all?page=1">First</a>' if page > 1 else ''
-    last_page = f'<a href="/users/all?page={total_pages}">Last</a>' if page < total_pages else ''
+    next_page = getPage(page + 1, "Next") if len(users_page) == per_page else ''
+    prev_page = getPage(page - 1, "Prev") if page > 1 else ''
+    first_page = getPage(1, "First") if page > 1 else ''
+    last_page = getPage(total_pages, "Last") if page < total_pages else ''
     pagination = f'''<div>
-      <button class="nav-button">{first_page}</button> <button class="nav-button">{prev_page}</button> 
+      {first_page} {prev_page}
       {page_links}
-      <button class="nav-button">{next_page}</button> <button class="nav-button">{last_page}</button></div>'''
+      {next_page} {last_page}
+      </div>'''
 
     new_users_list = f'''
     <h1>전체 사용자 목록</h1>
@@ -80,6 +76,11 @@ def users_all():
     '''
     return body("users DB", new_users_list)
 
+def getPage(goto=1, label=""):
+  return f'''<button class="nav-button">
+        <a href="/users/all?page={goto}">
+        {label}</a></button>
+  '''
 
 @users_db_bp.route("/<int:id>")
 def users_detail(id):

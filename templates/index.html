@@ -55,10 +55,31 @@ psql 프롬프트가 나오면 \password postgres 명령을 입력하고 새로�
 </section>
 <h1>Installation Instructions</h1>
 <section>
+<h2>windows 가상환경(venv) 설정</h2>
+<h5>다운로드:</h5>
+<pre>Python.org에서 3.6.8 버전의 Python 설치 파일을 다운로드
+설치 과정에서 "Add Python to PATH" 옵션을 반드시 선택하여 환경 변수를 등록합니다.
+</pre>
+<h5>가상 환경(Virtual Environment) 생성</h5>
+<pre>
+가상 환경 생성: 개발하려는 프로젝트 폴더를 만들고
+    python -m venv .venv
+가상 환경 활성화: 생성된 가상 환경을 활성화
+    .venv\Scripts\activate
+(프롬프트 앞에 .venv가 붙으면 활성화된 것입니다.) 
+Flask 설치
+    pip install Flask
+
+데이터베이스 라이브러리 설치
+pip install --only-binary :all: psycopg2-binary
+(앞에 option이 없으면 c++ 14 설치하라는 애러 나옮)
+
+db 연동 라이브러리 설치
+pip install sqlalchemy
+(특정 버전이 필요하면 pip install sqlalchemy==1.3.2)
+</pre>
 <h3>실행 순서 -> activate -> flask run</h3>
 <ol>
-  <li>Clone the repository: <code>git clone https://github.com/your/repo.git</code></li>
-  <li>Navigate to the project directory: <code>cd repo</code></li>
   <li>Create a virtual environment: <code>python -m venv venv</code></li>
   <li>Activate the virtual environment:
     <ul>
@@ -70,7 +91,6 @@ psql 프롬프트가 나오면 \password postgres 명령을 입력하고 새로�
   <li>Run the application: <code>python app.py</code></li>
 </ol>
 <h2>다른 방법</h2>
-<p>다른 방법으로 설치하려면 다음 단계를 따르십시오:</p>
 <ol>
   <li>python venvs를 다른 폴더에 구성: <code>mkdir venvs</code></li>
   <li>프로젝트 환경 구성: <code>python -m venv venvs/myvenv</code></li>
@@ -159,3 +179,12 @@ if __name__ == "__main__":
   </li>
 </ol>
 </section>
+<h2>Git basic</h2>
+<pre>
+echo "# python-flask-postgresql" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin git@github.com:slow333/python-flask-postgresql.git
+git push -u origin main  </pre>
