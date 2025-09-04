@@ -1,5 +1,4 @@
 from flask import Flask, render_template as render # type: ignore
-from flask_cors import CORS # type: ignore
 from module.body import body
 
 from bp.postgres_bp import psql_bp
@@ -8,11 +7,17 @@ from bp.content_db_bp import content_db_bp
 
 from bp.crud_no_db import bp as crud_no_db_bp
 from bp.crud_db import users_db_bp
-from bp.book_bp_psycopg2 import book_bp
 from bp.book_bp_sqlalchemy import book_bp_engine
 
 app = Flask(__name__)
-CORS(app)
+
+@app.after_request
+def after_request(response):
+  response.headers["Access-Control-Allow-Origin"] = "*"
+  response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+  response.headers["Access-Control-Allow-Methods"] = "GET, PUT, POST, DELETE, OPTIONS"
+  response.headers["Access-Control-Allow-Credentials"] = "true"
+  return response
 
 app.register_blueprint(psql_bp)
 app.register_blueprint(python_bp)

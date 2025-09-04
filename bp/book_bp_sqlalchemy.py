@@ -6,7 +6,7 @@ book_bp_engine = Blueprint('book_bp_sqlalchemy', __name__, url_prefix='/books')
 @book_bp_engine.route('/', methods=['GET'])
 def get_books():
     with engine.connect() as conn:
-        result = conn.execute('SELECT * FROM book;')
+        result = conn.execute('SELECT * FROM book order by id;')
         books = [dict(row) for row in result]
     return jsonify(books)
 
@@ -41,15 +41,21 @@ def get_book(book_id):
 @book_bp_engine.route('/<int:book_id>', methods=['PUT'])
 def update_book(book_id):
     data = request.get_json()
+    print(data)
     with engine.connect() as conn:
         conn.execute(
-            'UPDATE book SET title = %s, author = %s, language = %s, published_date = %s WHERE id = %s;',
-            (data.get("title"), data.get("author"), data.get("language"), data.get("published_date"), book_id)
+            'UPDATE book SET title = %s, author = %s, language = %s WHERE id = %s;',
+            (data.get("title"), data.get("author"), data.get("language"), book_id)
         )
     return jsonify({"message": "Book updated successfully"})
 
 @book_bp_engine.route('/<int:book_id>', methods=['DELETE'])
 def delete_book(book_id):
+    with engine.connect() as conn:
+        result = conn.execute('SELECT * FROM book WHERE id = %s;', (book_id,))
+        book = result.fetchone()
+        if book is None:
+            return jsonify({"error": "Book not found"}), 404
     with engine.connect() as conn:
         conn.execute('DELETE FROM book WHERE id = %s;', (book_id,))
     return jsonify({"message": f"Book deleted successfully: {book_id}"})
