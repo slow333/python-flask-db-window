@@ -16,14 +16,15 @@ def get_books():
 
 @book_bp_engine.route('/', methods=['POST'])
 def create_book():
-    data = request.get_json()
+    data = request.get_json(force=True)
+    
     with engine.connect() as conn:
         result = conn.execute(
             'INSERT INTO book (title, author, language, published_date) VALUES (%s, %s, %s, %s) RETURNING id;',
             (data.get("title"), data.get("author"), data.get("language"), data.get("published_date"))
         )
+        new_id = result.fetchone()[0]
 
-    new_id = result.fetchone()[0]
     new_book = {
         "id": new_id,
         "title": data.get("title"),

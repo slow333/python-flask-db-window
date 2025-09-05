@@ -29,6 +29,8 @@ def get_books():
       book['published_date'] = str(book['published_date'])
       
   return json.dumps(books)</pre>
+<h4>flask 0.12.5 이전 버젼에서는 request.get_json() 에서 tuple을 반환해서 애러가 발생</h4>
+<P>그래서 최소한 flask 0.12.5로 업그레이드 해야함</P>
 </section>
 <section>
 <h2>postgresql 설정</h2>
