@@ -1,7 +1,4 @@
-import sys
-sys.path.append("b:/python/window-flask")
-
-from flask import Blueprint, request, Response, Flask, jsonify # type: ignore
+from flask import Blueprint, request # type: ignore
 import json
 from db.users.connect_db import engine
 
@@ -41,8 +38,9 @@ def get_book(book_id):
     with engine.connect() as conn:
         result = conn.execute('SELECT * FROM book WHERE id = %s;', (book_id,))
         book = result.fetchone()
-        # book = dict(book)
-        # book['published_date'] = str(book['published_date'])
+        if book:
+            book = dict(book)
+            book['published_date'] = str(book['published_date'])
         if book is None:
             return json.dumps({"error": "Book not found"})
 
