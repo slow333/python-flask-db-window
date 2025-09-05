@@ -1,6 +1,11 @@
-from flask import Flask, render_template as render # type: ignore
+import sys
+sys.path.append('B:\\python\\window-flask')
+
+from flask import Flask, render_template as render, jsonify # type: ignore
+import flask
 from module.body import body
 
+from db.users.connect_db import engine
 from bp.postgres_bp import psql_bp
 from bp.python_bp import python_bp
 from bp.content_db_bp import content_db_bp
@@ -10,6 +15,7 @@ from bp.crud_db import users_db_bp
 from bp.book_bp_sqlalchemy import book_bp_engine
 
 app = Flask(__name__)
+print("Flask version:", flask.__version__)
 
 @app.after_request
 def after_request(response):

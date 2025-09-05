@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy import Table, Column, String, insert, Integer, ForeignKey
 
-engine = create_engine('postgresql://postgres:1234@192.168.219.101:5432/mydb')
+engine = create_engine('postgresql://postgres:1111@localhost:5432/mydb')
 # engine = create_engine('postgresql://postgres:1234@192.168.219.101:5432/mydb', echo=True)
 metadata = MetaData()
 
